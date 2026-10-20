@@ -6,85 +6,102 @@
 [![CoreML](https://img.shields.io/badge/ML-Core%20ML-green.svg)](https://developer.apple.com/documentation/coreml)
 [![Swift Charts](https://img.shields.io/badge/Visualizations-Swift%20Charts%20%7C%20MapKit-indigo.svg)](https://developer.apple.com/documentation/charts)
 
-**myUnicorn AI** is a native iOS application designed to explore, visualize, and predict valuation dynamics across global billion-dollar private startups ("unicorns"). Combining interactive exploratory data analysis with privacy-first on-device machine learning, the app delivers macro industry insights, geospatial clustering, funding-to-valuation correlations, and on-demand valuation tier predictions.
+**myUnicorn AI** is a native iOS application for exploring, visualizing, and predicting valuation dynamics across global billion-dollar private startups ("unicorns"). It combines interactive exploratory data analysis with a custom-trained, on-device machine learning model, delivering industry insights, geospatial clustering, funding-to-valuation correlations, and on-demand valuation tier predictions.
 
 ---
 
 ## Table of Contents
 
-- [Overview](#-overview)
-- [Key Features](#-key-features)
-  - [1. Onboarding & Executive Dashboard](#1-onboarding--executive-dashboard)
-  - [2. Deep-Dive Analytical Visualizations](#2-deep-dive-analytical-visualizations)
-  - [3. On-Device AI Valuation Predictor](#3-on-device-ai-valuation-predictor)
-- [Machine Learning Architecture](#-machine-learning-architecture)
-- [Project Architecture & Directory Structure](#-project-architecture--directory-structure)
-- [Data Specifications & Benchmarks](#-data-specifications--benchmarks)
-- [Tech Stack & Frameworks](#-tech-stack--frameworks)
-- [Getting Started](#-getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Build and Run](#build-and-run)
-  - [Running Tests](#running-tests)
-- [Author & License](#-author--license)
+- [Overview](#overview)
+- [Key Features](#key-features)
+- [Machine Learning](#machine-learning)
+- [Project Structure](#project-structure)
+- [Data](#data)
+- [Tech Stack](#tech-stack)
+- [Getting Started](#getting-started)
+- [License & Attribution](#license--attribution)
 
 ---
 
 ## Overview
 
-In venture capital and tech ecosystems, a **Unicorn** refers to a privately held startup company valued at **$1 billion or more**. As private market investments and startup valuations rapidly evolved over the past decade, understanding growth trends, industry leadership, capital efficiency, and geographical distribution has become essential.
+In venture capital and tech ecosystems, a **unicorn** is a privately held startup valued at **$1 billion or more**. As startup valuations have grown rapidly over the past decade, understanding growth trends, industry leadership, capital efficiency, and geographic distribution has become increasingly important.
 
-**myUnicorn** solves this by:
-1. Translating global startup datasets into **five dedicated, interactive visualization views** built with Apple's **Swift Charts** and **MapKit**.
-2. Integrating a trained **Core ML classifier** (`FinalUnicornPredictor.mlmodel`) to predict whether a startup belongs in a **High** or **Low** valuation tier based on its core operational and funding signals—executed entirely on-device with zero server latency.
+**myUnicorn** addresses this by:
+1. Turning global startup datasets into **five interactive visualization views** built with Apple's **Swift Charts** and **MapKit**.
+2. Running a **Random Forest classifier** that I trained on startup data and bundled as a Core ML model (`FinalUnicornPredictor.mlmodel`). It predicts whether a startup falls in a **High** or **Low** valuation tier from five funding and operational inputs, entirely on-device with no server calls.
 
 ---
 
 ## Key Features
 
-### 1. Onboarding & Executive Dashboard
-- **Welcome Experience ([`ContentView.swift`](file:///Users/maxim/Desktop/specialization/CS192-4P/M1/Activities/myUnicorn/myUnicorn/ContentView.swift))**: Educational landing screen introducing unicorn fundamentals, core capability highlights (Charts, Maps, AI Model), and a spring-animated gateway into the main dashboard.
-- **Executive Hub ([`chartScreen.swift`](file:///Users/maxim/Desktop/specialization/CS192-4P/M1/Activities/myUnicorn/myUnicorn/chartScreen.swift))**: Card-based navigation interface displaying quick links to individual chart modules with custom SF Symbols and secondary grouped styling.
-- **Persistent Tab Navigation ([`MainTabView.swift`](file:///Users/maxim/Desktop/specialization/CS192-4P/M1/Activities/myUnicorn/myUnicorn/MainTabView.swift))**: Seamless switching between the **Summary** dashboard and the **AI Predictor** workspace.
+### 1. Onboarding & Dashboard
+- **Welcome screen** ([`ContentView.swift`](myUnicorn/ContentView.swift)): introduces unicorn fundamentals, highlights the app's capabilities (Charts, Maps, AI Model), and leads into the main dashboard with a spring animation.
+- **Dashboard** ([`chartScreen.swift`](myUnicorn/chartScreen.swift)): card-based navigation to each chart module, with SF Symbols and grouped styling.
+- **Tab navigation** ([`MainTabView.swift`](myUnicorn/MainTabView.swift)): switches between the **Summary** dashboard and the **AI Predictor**.
 
-### 2. Deep-Dive Analytical Visualizations
+### 2. Analytical Visualizations
 
 | Module | File | Framework | Key Capabilities |
 | :--- | :--- | :--- | :--- |
-| **Global Explosion** | [`lineGraph.swift`](file:///Users/maxim/Desktop/specialization/CS192-4P/M1/Activities/myUnicorn/myUnicorn/Charts/lineGraph.swift) | `Charts` | Cumulative growth curve (2011–2022) with Catmull-Rom smoothed `AreaMark`, `LineMark`, and annotated `PointMark` milestones highlighting the record surge in 2021 (+466 unicorns). |
-| **Industries** | [`barGraph.swift`](file:///Users/maxim/Desktop/specialization/CS192-4P/M1/Activities/myUnicorn/myUnicorn/Charts/barGraph.swift) | `SwiftUI` | Ranked horizontal bar chart comparing 15 startup sectors. Features dynamic KPI tiles and shows Fintech (189 companies) and Internet Software (179 companies) dominating 41% of all unicorns. |
-| **Market Share** | [`treeMap.swift`](file:///Users/maxim/Desktop/specialization/CS192-4P/M1/Activities/myUnicorn/myUnicorn/Charts/treeMap.swift) | `SwiftUI` | Custom proportional 2D spatial treemap displaying global valuation concentration. Highlights United States leadership ($1.93T / 61% share) followed by China, the UK, and India. |
-| **Correlations** | [`scatterpointChart.swift`](file:///Users/maxim/Desktop/specialization/CS192-4P/M1/Activities/myUnicorn/myUnicorn/Charts/scatterpointChart.swift) | `Charts` | Interactive scatter plot measuring Capital Raised ($B) against Valuation ($B) across companies like ByteDance, SpaceX, Stripe, and Klarna, with industry color-coding and trend insights. |
-| **Global Hubs** | [`geospatialMap.swift`](file:///Users/maxim/Desktop/specialization/CS192-4P/M1/Activities/myUnicorn/myUnicorn/Charts/geospatialMap.swift) | `MapKit` | World density map plotting metropolitan clusters (San Francisco, New York, Beijing, Shanghai, London, Bengaluru, Shenzhen) using proportional `MapCircle` radii and tap-to-inspect `DensityBubbleView` overlays. |
+| **Global Explosion** | [`lineGraph.swift`](myUnicorn/Charts/lineGraph.swift) | `Charts` | Cumulative growth curve (2011–2022) with smoothed `AreaMark`, `LineMark`, and annotated `PointMark` milestones, including the 2021 surge (+466 unicorns). |
+| **Industries** | [`barGraph.swift`](myUnicorn/Charts/barGraph.swift) | `SwiftUI` | Ranked horizontal bar chart of 15 startup sectors with KPI tiles. Fintech (189 companies) and Internet Software (179) together account for about 41% of all unicorns. |
+| **Market Share** | [`treeMap.swift`](myUnicorn/Charts/treeMap.swift) | `SwiftUI` | Custom proportional treemap of valuation by country, led by the United States ($1.93T, 61% share), followed by China, the UK, and India. |
+| **Correlations** | [`scatterpointChart.swift`](myUnicorn/Charts/scatterpointChart.swift) | `Charts` | Scatter plot of capital raised ($B) against valuation ($B) for companies such as ByteDance, SpaceX, Stripe, and Klarna, with industry color-coding and trend insights. |
+| **Global Hubs** | [`geospatialMap.swift`](myUnicorn/Charts/geospatialMap.swift) | `MapKit` | World map of startup hubs (San Francisco, New York, Beijing, Shanghai, London, Bengaluru, Shenzhen) using proportional `MapCircle` radii and tap-to-inspect overlays. |
 
-### 3. On-Device AI Valuation Predictor
-Located in [`predictionView.swift`](file:///Users/maxim/Desktop/specialization/CS192-4P/M1/Activities/myUnicorn/myUnicorn/predictionView.swift) and powered by [`predictionModel.swift`](file:///Users/maxim/Desktop/specialization/CS192-4P/M1/Activities/myUnicorn/myUnicorn/predictionModel.swift):
-- **Interactive Control Sliders**: Real-time manipulation of company metrics with formatted displays (compact USD currency notation, year integers, and elapsed intervals).
-- **Core ML Inference Engine**: Evaluates startup parameters via `PredictionService.shared`.
-- **Dynamic Result Card**: Displays predicted classification badge (`High` vs `Low`), qualitative interpretation, and an animated probability confidence bar.
-- **Privacy-First**: No data leaves the device; inference executes locally using Apple Neural Engine / GPU acceleration.
+### 3. On-Device Valuation Predictor
+Implemented in [`predictionView.swift`](myUnicorn/predictionView.swift) and [`predictionModel.swift`](myUnicorn/predictionModel.swift):
+- **Interactive sliders** for the five model inputs, with formatted displays (compact USD, years, elapsed intervals).
+- **Core ML inference** through `PredictionService.shared`.
+- **Result card** showing the predicted tier badge (`High` or `Low`), a short interpretation, and an animated confidence bar.
+- **Privacy-first:** no data leaves the device, and inference runs locally through Core ML.
 
 ---
 
-## Machine Learning Architecture
+## Machine Learning
 
-The app bundles a pre-trained machine learning model: **`FinalUnicornPredictor.mlmodel`**.
+The app bundles **`FinalUnicornPredictor.mlmodel`**, a Random Forest classifier trained in Python (Google Colab) on startup data.
+
+### Model Selection
+
+I compared four candidate models on a 70/30 train/test split:
+
+| Model | Accuracy |
+| :--- | :---: |
+| Decision Tree (Gini) | 67.58% |
+| Decision Tree (Entropy) | 67.58% |
+| **Random Forest (50 trees)** | **73.05%** |
+| Random Forest (100 trees) | 71.88% |
+
+**Random Forest (50 trees)** performed best and was selected as the final model.
+
+### Final Evaluation
+
+To estimate real-world performance, the selected model was evaluated on a separate **10% hold-out set** that was kept aside from the start and never used for model selection:
+
+| Evaluation | Accuracy |
+| :--- | :---: |
+| Hold-out set (10%) | **71.58%** |
+
+The model is a two-class classifier (High vs. Low tier), so the roughly 72% hold-out accuracy should be read as a useful screening signal, not a precise valuation estimate.
 
 ### Input Features
 
-| Feature Name | Swift Type | Model Input Key | Operational Range | Default | Unit / Format |
+| Feature | Swift Type | Model Input Key | Range | Default | Unit / Format |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | **Founded Year** | `Double` | `Founded_Year` | `2000 – 2026` | `2015` | Year (`YYYY`) |
 | **Total Raised** | `Double` | `Total_Raised` | `$1M – $5B` | `$250M` | USD (`$10M` step) |
-| **Investors Count** | `Double` | `Investors_Count` | `1 – 80` | `10` | Lead / syndicate investors |
-| **Deal Terms** | `Double` | `Deal_Terms` | `1 – 20` | `3` | Funding rounds & terms count |
-| **Years to Unicorn** | `Double` | `Years_To_Unicorn` | `1 – 25` | `5` | Years from inception to $1B |
+| **Investors Count** | `Double` | `Investors_Count` | `1 – 80` | `10` | Number of investors |
+| **Deal Terms** | `Double` | `Deal_Terms` | `1 – 20` | `3` | Funding rounds and terms count |
+| **Years to Unicorn** | `Double` | `Years_To_Unicorn` | `1 – 25` | `5` | Years from founding to $1B |
 
 ### Output
 
 | Feature | Type | Description |
 | :--- | :--- | :--- |
-| **Tier** | `String` | Categorical classification: **`High`** (Upper valuation tier) or **`Low`** (Base valuation tier). |
-| **classProbability** | `[String: Double]` | Probability distribution used by [`predictionModel.swift`](file:///Users/maxim/Desktop/specialization/CS192-4P/M1/Activities/myUnicorn/myUnicorn/predictionModel.swift#L50) to render the model confidence score (0%–100%). |
+| **Tier** | `String` | Predicted class: **`High`** (upper valuation tier) or **`Low`** (base valuation tier). |
+| **classProbability** | `[String: Double]` | Class probabilities that [`predictionModel.swift`](myUnicorn/predictionModel.swift) uses to display the confidence score (0%–100%). |
 
 ```swift
 // Sample programmatic inference
@@ -103,98 +120,83 @@ if let result = result {
 
 ---
 
-## Project Architecture & Directory Structure
+## Project Structure
 
 ```text
 myUnicorn/
 ├── myUnicorn.xcodeproj                 # Xcode project configuration
 ├── FinalUnicornPredictor.mlmodel       # Bundled Core ML classification model
-├── myUnicorn/
-│   ├── myUnicornApp.swift              # Application entry point (@main)
-│   ├── ContentView.swift               # Welcome / onboarding splash screen
-│   ├── MainTabView.swift               # Tab navigation controller
-│   ├── chartScreen.swift               # Dashboard grid view with destination links
-│   ├── Item.swift                      # Data models & Identifiable structs
-│   ├── myData.swift                    # Static sample datasets & global hub constants
-│   ├── predictionModel.swift           # PredictionService singleton for Core ML inference
-│   ├── predictionView.swift            # Interactive inference UI with sliders & result cards
-│   ├── Charts/                         # Specialized data visualization views
-│   │   ├── barGraph.swift              # Industry distribution bar chart
-│   │   ├── geospatialMap.swift         # MapKit density map & interactive bubbles
-│   │   ├── lineGraph.swift             # Cumulative growth timeline chart
-│   │   ├── scatterpointChart.swift     # Capital raised vs valuation scatter plot
-│   │   └── treeMap.swift               # Country valuation proportional treemap
-│   └── Assets.xcassets                 # App icons, accent colors, and asset catalog
-├── myUnicornTests/
-│   └── myUnicornTests.swift            # Unit test suite (XCTest)
-└── myUnicornUITests/
-    ├── myUnicornUITests.swift          # UI automation test suite
-    └── myUnicornUITestsLaunchTests.swift # Launch performance & snapshot tests
+└── myUnicorn/
+    ├── myUnicornApp.swift              # App entry point (@main)
+    ├── ContentView.swift               # Welcome / onboarding screen
+    ├── MainTabView.swift               # Tab navigation
+    ├── chartScreen.swift               # Dashboard with links to each chart
+    ├── Item.swift                      # Data models and Identifiable structs
+    ├── myData.swift                    # Sample datasets and hub constants
+    ├── predictionModel.swift           # PredictionService singleton for Core ML inference
+    ├── predictionView.swift            # Prediction UI with sliders and result card
+    ├── Charts/
+    │   ├── barGraph.swift              # Industry distribution bar chart
+    │   ├── geospatialMap.swift         # MapKit density map
+    │   ├── lineGraph.swift             # Cumulative growth timeline
+    │   ├── scatterpointChart.swift     # Capital raised vs. valuation scatter plot
+    │   └── treeMap.swift               # Country valuation treemap
+    └── Assets.xcassets                 # App icons, accent colors, assets
 ```
 
 ### Architectural Principles
 
-- **Declarative SwiftUI**: Clean separation of state (`@State`, `@Binding`) and presentation logic.
-- **Service Singleton Pattern**: [`PredictionService`](file:///Users/maxim/Desktop/specialization/CS192-4P/M1/Activities/myUnicorn/myUnicorn/predictionModel.swift#L4) initializes `FinalUnicornPredictor` exactly once during application lifecycle to preserve memory and battery.
-- **Adaptive Visual Hierarchy**: Utilizes semantic system colors (`Color(.secondarySystemGroupedBackground)`) to natively support **Light Mode** and **Dark Mode** without hardcoded color values.
-- **Modular Visualizations**: Every chart view is isolated with its own summary metrics tiles, chart viewport, axis formatting, and automated insight footer.
+- **Declarative SwiftUI:** state (`@State`, `@Binding`) is kept separate from presentation logic.
+- **Service singleton:** [`PredictionService`](myUnicorn/predictionModel.swift) loads `FinalUnicornPredictor` once for the app's lifetime to save memory and battery.
+- **Adaptive appearance:** semantic system colors (e.g. `Color(.secondarySystemGroupedBackground)`) support Light and Dark Mode without hardcoded colors.
+- **Modular visualizations:** each chart view is self-contained, with its own summary tiles, axis formatting, and insight footer.
 
 ---
 
-## Data Specifications & Benchmarks
+## Data
 
-The project embeds structured datasets in [`myData.swift`](file:///Users/maxim/Desktop/specialization/CS192-4P/M1/Activities/myUnicorn/myUnicorn/myData.swift) and models defined in [`Item.swift`](file:///Users/maxim/Desktop/specialization/CS192-4P/M1/Activities/myUnicorn/myUnicorn/Item.swift):
+Structured datasets live in [`myData.swift`](myUnicorn/myData.swift), with models defined in [`Item.swift`](myUnicorn/Item.swift):
 
-- **Industry Distribution ([`IndustryDistribution`](file:///Users/maxim/Desktop/specialization/CS192-4P/M1/Activities/myUnicorn/myUnicorn/Item.swift#L5-L9))**: 946+ tracked companies across 15 distinct sectors (Fintech, Internet software, AI, E-commerce, Health, Supply Chain, Cybersecurity, etc.).
-- **Timeline Growth ([`GrowthTimeline`](file:///Users/maxim/Desktop/specialization/CS192-4P/M1/Activities/myUnicorn/myUnicorn/Item.swift#L11-L15))**: Annual cumulative milestones tracking the exponential rise from 2 unicorns in 2011 to nearly 1,000 unicorns in 2022.
-- **Country Market Cap Treemap ([`CountryValueNode`](file:///Users/maxim/Desktop/specialization/CS192-4P/M1/Activities/myUnicorn/myUnicorn/Item.swift#L17-L23))**: Country-level valuations led by the United States ($1.93T), China ($569B), United Kingdom ($150B), and India ($148B).
-- **Tech Hub Geospatial Clusters ([`TechHubLocation`](file:///Users/maxim/Desktop/specialization/CS192-4P/M1/Activities/myUnicorn/myUnicorn/Item.swift#L25-L32))**: Exact GPS coordinates (`CLLocationCoordinate2D`), unicorn counts, and cumulative valuations for top global startup cities.
-- **Venture Scatter Points ([`CompanyScatterPoint`](file:///Users/maxim/Desktop/specialization/CS192-4P/M1/Activities/myUnicorn/myUnicorn/Item.swift#L34-L40))**: Correlation benchmarks comparing total funding raised with current market valuation.
+- **Industry distribution** (`IndustryDistribution`): 946+ companies across 15 sectors (Fintech, Internet Software, AI, E-commerce, Health, Supply Chain, Cybersecurity, and more).
+- **Timeline growth** (`GrowthTimeline`): annual cumulative counts, from 2 unicorns in 2011 to nearly 1,000 in 2022.
+- **Country valuation treemap** (`CountryValueNode`): country-level valuations led by the United States ($1.93T), China ($569B), the United Kingdom ($150B), and India ($148B).
+- **Tech hub clusters** (`TechHubLocation`): GPS coordinates (`CLLocationCoordinate2D`), unicorn counts, and cumulative valuations for top startup cities.
+- **Venture scatter points** (`CompanyScatterPoint`): total funding raised vs. current valuation.
 
 ---
 
-## Tech Stack & Frameworks
+## Tech Stack
 
-| Layer | Framework / Technology | Usage |
+| Layer | Technology | Usage |
 | :--- | :--- | :--- |
-| **Language** | Swift 5.9+ / Swift 6 | Strict type safety, modern async patterns, modern concurrency |
-| **UI Framework** | SwiftUI | Reactive views, declarative hierarchy, spring animations |
-| **Charting** | Swift Charts (`Charts`) | `LineMark`, `AreaMark`, `PointMark`, custom axis values & mark styles |
-| **Mapping** | MapKit (`MapKit`) & `CoreLocation` | Interactive camera position, `MapCircle`, custom tap-gesture annotations |
-| **Machine Learning**| Core ML (`CoreML`) | On-device model initialization and zero-latency inference |
-| **Testing** | XCTest & XCUITest | Unit test suites, performance measurements, and UI automation tests |
+| **Language** | Swift 5.9+ | Type-safe, modern Swift |
+| **UI** | SwiftUI | Declarative views, spring animations |
+| **Charting** | Swift Charts | `LineMark`, `AreaMark`, `PointMark`, custom axes and mark styles |
+| **Mapping** | MapKit, CoreLocation | Interactive camera, `MapCircle`, tap-gesture annotations |
+| **Machine Learning** | Core ML | On-device model loading and inference |
+| **Model Training** | Python (Google Colab) | Decision Tree and Random Forest experiments, model selection, hold-out evaluation |
 
 ---
 
 ## Getting Started
 
 ### Prerequisites
-- **Mac** running macOS Sonoma (14.0+) or macOS Sequoia (15.0+).
-- **Xcode** 15.0 or later installed.
-- **iOS Simulator** or physical device running **iOS 17.0+**.
+- A Mac running macOS Sonoma (14.0+) or later
+- Xcode 15.0 or later
+- An iOS Simulator or physical device running iOS 17.0+
 
 ### Build and Run
-1. **Clone or Navigate to the Repository**:
+1. **Open the project:**
    ```bash
    cd /path/to/myUnicorn
-   ```
-2. **Open the Project in Xcode**:
-   ```bash
    open myUnicorn.xcodeproj
    ```
-3. **Select a Target & Destination**:
-   - In Xcode's toolbar, choose the scheme `myUnicorn`.
-   - Select an iOS Simulator (e.g., *iPhone 16 Pro* or *iPhone 15*).
-4. **Compile and Run**:
-   - Press **`Cmd + R`** or click the **Play** button in Xcode.
-   - Navigate through the onboarding screen to access the Dashboard and AI Predictor.
-
-### Running Tests
-- Press **`Cmd + U`** to execute the unit and UI test suites.
+2. **Select the `myUnicorn` scheme** and an iOS Simulator (e.g. iPhone 16 Pro).
+3. **Press `Cmd + R`** to build and run, then use the welcome screen to reach the dashboard and AI Predictor.
 
 ---
 
 ## License & Attribution
 
-Developed as part of the **CS192-4P** project curriculum.  
-All sample unicorn benchmark figures are compiled for educational and analytical purposes.  
+Developed as part of the **CS192-4P** project curriculum.
+All sample unicorn figures are compiled for educational and analytical purposes.
