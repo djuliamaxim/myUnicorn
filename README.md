@@ -39,7 +39,7 @@ In venture capital and tech ecosystems, a **Unicorn** refers to a privately held
 
 ---
 
-## 🚀 Key Features
+## Key Features
 
 ### 1. Onboarding & Executive Dashboard
 - **Welcome Experience ([`ContentView.swift`](file:///Users/maxim/Desktop/specialization/CS192-4P/M1/Activities/myUnicorn/myUnicorn/ContentView.swift))**: Educational landing screen introducing unicorn fundamentals, core capability highlights (Charts, Maps, AI Model), and a spring-animated gateway into the main dashboard.
