@@ -35,7 +35,6 @@ struct barChart: View {
                 header
                 summaryMetrics
                 chartCard
-                insightFooter
             }
             .padding()
         }
@@ -153,17 +152,6 @@ struct barChart: View {
         .frame(height: 24)
     }
     
-    private var insightFooter: some View {
-        HStack(alignment: .top, spacing: 8) {
-            Image(systemName: "info.circle.fill")
-                .foregroundStyle(.secondary)
-            
-            Text("Fintech and internet software lead the dataset, together accounting for \(topTwoShare)% of tracked unicorns.")
-                .font(.caption)
-                .foregroundStyle(.secondary)
-        }
-        .padding(.horizontal, 4)
-    }
     
     private var topTwoShare: Int {
         guard totalCompanies > 0 else { return 0 }
