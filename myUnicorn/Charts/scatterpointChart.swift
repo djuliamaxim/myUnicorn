@@ -47,7 +47,6 @@ struct scatterpointChart: View {
                 header
                 summaryMetrics
                 chartCard
-                insightFooter
             }
             .padding()
         }
@@ -192,17 +191,6 @@ struct scatterpointChart: View {
         }
     }
     
-    private var insightFooter: some View {
-        HStack(alignment: .top, spacing: 8) {
-            Image(systemName: "info.circle.fill")
-                .foregroundStyle(.secondary)
-            
-            Text("The highest-valued companies sit far above the rest of the sample, showing that valuation does not rise evenly with funding raised.")
-                .font(.caption)
-                .foregroundStyle(.secondary)
-        }
-        .padding(.horizontal, 4)
-    }
     
     private func metricTile(title: String, value: String, caption: String, color: Color, systemImage: String) -> some View {
         VStack(alignment: .leading, spacing: 10) {

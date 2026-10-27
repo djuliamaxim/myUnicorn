@@ -35,7 +35,6 @@ struct geospatialMap: View {
                 header
                 summaryMetrics
                 mapCard
-                insightFooter
             }
             .padding()
         }
@@ -153,17 +152,6 @@ struct geospatialMap: View {
         }
     }
     
-    private var insightFooter: some View {
-        HStack(alignment: .top, spacing: 8) {
-            Image(systemName: "info.circle.fill")
-                .foregroundStyle(.secondary)
-            
-            Text("San Francisco and New York remain the densest mapped hubs, together representing \(topTwoShare)% of companies in this city sample.")
-                .font(.caption)
-                .foregroundStyle(.secondary)
-        }
-        .padding(.horizontal, 4)
-    }
     
     private var topTwoShare: Int {
         guard totalCompanies > 0 else { return 0 }

@@ -30,7 +30,6 @@ struct treeMap: View {
                 header
                 summaryMetrics
                 chartCard
-                insightFooter
             }
             .padding()
         }
@@ -166,19 +165,7 @@ struct treeMap: View {
         }
         .padding(.top, 2)
     }
-    
-    private var insightFooter: some View {
-        HStack(alignment: .top, spacing: 8) {
-            Image(systemName: "info.circle.fill")
-                .foregroundStyle(.secondary)
-            
-            Text("The United States holds \(topCountryShare)% of tracked unicorn value, making it the dominant market in this dataset.")
-                .font(.caption)
-                .foregroundStyle(.secondary)
-        }
-        .padding(.horizontal, 4)
-    }
-    
+        
     private func treemapBlock(node: CountryValueNode, isPrimary: Bool) -> some View {
         ZStack(alignment: .bottomLeading) {
             RoundedRectangle(cornerRadius: 12, style: .continuous)

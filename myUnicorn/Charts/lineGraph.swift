@@ -45,7 +45,6 @@ struct lineGraph: View {
                 header
                 summaryMetrics
                 chartCard
-                insightFooter
             }
             .padding()
         }
@@ -193,17 +192,6 @@ struct lineGraph: View {
         .foregroundStyle(.secondary)
     }
     
-    private var insightFooter: some View {
-        HStack(alignment: .top, spacing: 8) {
-            Image(systemName: "info.circle.fill")
-                .foregroundStyle(.secondary)
-            
-            Text("The ecosystem grew fastest in \(String(peakGrowth?.year ?? 2021)), adding \(peakGrowth?.change ?? 0) unicorns in a single year.")
-                .font(.caption)
-                .foregroundStyle(.secondary)
-        }
-        .padding(.horizontal, 4)
-    }
     
     private func metricTile(title: String, value: String, caption: String, color: Color, systemImage: String) -> some View {
         VStack(alignment: .leading, spacing: 10) {

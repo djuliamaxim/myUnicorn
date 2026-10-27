@@ -42,7 +42,6 @@ struct PredictorView: View {
                 resultCard
                 inputCard
                 evaluateButton
-                insightFooter
             }
             .padding()
         }
@@ -54,10 +53,6 @@ struct PredictorView: View {
         VStack(alignment: .leading, spacing: 6) {
             Text("AI Tier Predictor")
                 .font(.title2.weight(.bold))
-            
-            Text("Estimate a unicorn's value tier from core company signals")
-                .font(.subheadline)
-                .foregroundStyle(.secondary)
         }
     }
     
@@ -214,17 +209,6 @@ struct PredictorView: View {
         .buttonStyle(.plain)
     }
     
-    private var insightFooter: some View {
-        HStack(alignment: .top, spacing: 8) {
-            Image(systemName: "info.circle.fill")
-                .foregroundStyle(.secondary)
-            
-            Text("Predictions are generated on-device from the bundled Core ML classifier using funding, investor count, founding year, and speed to unicorn status.")
-                .font(.caption)
-                .foregroundStyle(.secondary)
-        }
-        .padding(.horizontal, 4)
-    }
     
     private var tierColor: Color {
         switch predictedTier {
