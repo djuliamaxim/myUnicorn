@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		9459F4762FC551BF004E2D76 /* FinalUnicornPredictor.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 9459F4752FC551BF004E2D76 /* FinalUnicornPredictor.mlmodel */; };
+		948B4261309090EB00F0AD6C /* Adobe Express - ScreenRecording_10-27-2026 15-43-03_1.gif in Resources */ = {isa = PBXBuildFile; fileRef = 948B4260309090EB00F0AD6C /* Adobe Express - ScreenRecording_10-27-2026 15-43-03_1.gif */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,6 +33,7 @@
 		9411FA532FB85A630015FC3A /* myUnicornTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = myUnicornTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9411FA5D2FB85A630015FC3A /* myUnicornUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = myUnicornUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9459F4752FC551BF004E2D76 /* FinalUnicornPredictor.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = FinalUnicornPredictor.mlmodel; sourceTree = "<group>"; };
+		948B4260309090EB00F0AD6C /* Adobe Express - ScreenRecording_10-27-2026 15-43-03_1.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "Adobe Express - ScreenRecording_10-27-2026 15-43-03_1.gif"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -84,6 +86,7 @@
 				9411FA562FB85A630015FC3A /* myUnicornTests */,
 				9411FA602FB85A630015FC3A /* myUnicornUITests */,
 				9459F4752FC551BF004E2D76 /* FinalUnicornPredictor.mlmodel */,
+				948B4260309090EB00F0AD6C /* Adobe Express - ScreenRecording_10-27-2026 15-43-03_1.gif */,
 				9411FA452FB85A630015FC3A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -218,6 +221,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				948B4261309090EB00F0AD6C /* Adobe Express - ScreenRecording_10-27-2026 15-43-03_1.gif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
