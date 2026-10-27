@@ -17,7 +17,9 @@ struct ContentView: View {
         } else {
             VStack(alignment: .leading, spacing: 24) {
                 Spacer(minLength: 18)
-                hero
+                VStack (alignment: .center, spacing: 20){
+                    hero
+                }.frame(maxWidth: .infinity, alignment: .center)
                 unicornCard
                 quickHighlights
                 Spacer()
@@ -29,7 +31,7 @@ struct ContentView: View {
     }
     
     private var hero: some View {
-        VStack(alignment: .leading, spacing: 16) {
+        VStack(alignment: .center, spacing: 16) {
             ZStack {
                 Circle()
                     .fill(Color.purple.gradient)
@@ -41,10 +43,11 @@ struct ContentView: View {
             }
             .shadow(color: Color.purple.opacity(0.28), radius: 12, x: 0, y: 6)
             
-            VStack(alignment: .leading, spacing: 6) {
+            VStack(alignment: .center, spacing: 6) {
                 Text("myUnicorn AI")
                     .font(.largeTitle.weight(.bold))
                 Text("Visualize unicorn data and predict startup valuation tiers: High or Low.")
+                    .multilineTextAlignment(.center)
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
             }
