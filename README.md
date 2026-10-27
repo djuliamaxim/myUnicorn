@@ -1,4 +1,4 @@
-# myUnicorn AI 🦄 (https://github.com/djuliamaxim/myUnicorn/App_showcase.gif)
+# myUnicorn AI ![App Showcase](App_showcase.gif)
 
 [![Platform](https://img.shields.io/badge/Platform-iOS%2017%2B-blue.svg)](https://developer.apple.com/ios/)
 [![Swift](https://img.shields.io/badge/Swift-5.9%2B-orange.svg)](https://swift.org)
